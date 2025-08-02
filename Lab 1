@@ -1,0 +1,72 @@
+1) write a cpp To Display n number of natural numbers and their sum.
+
+solve:
+#include <iostream>
+using namespace std;
+
+int main() {
+    int n, sum = 0;
+
+    // Ask the user for input
+    cout << "Enter the number of natural numbers to display: ";
+    cin >> n;
+
+    // Validate input
+    if (n <= 0) {
+        cout << "Please enter a positive integer greater than 0." << endl;
+        return 1;
+    }
+
+    cout << "The first " << n << " natural numbers are: ";
+
+    // Loop to display numbers and calculate sum
+    for (int i = 1; i <= n; ++i) {
+        cout << i << " ";
+        sum += i;
+    }
+
+    cout << "\nSum of the first " << n << " natural numbers is: " << sum << endl;
+
+    return 0;
+}
+Output:
+Enter the number of natural numbers to display: 5
+The first 5 natural numbers are: 1 2 3 4 5
+Sum of the first 5 natural numbers is: 15
+
+2. i) write a cpp To print the following pattern
+till n number of user input:
+1
+22
+333
+4444
+
+solve:
+#include <iostream>
+using namespace std;
+
+int main() {
+    int n;
+
+    // Ask user for input
+    cout << "Enter the number of lines: ";
+    cin >> n;
+
+    // Validate input
+    if (n <= 0) {
+        cout << "Please enter a positive number." << endl;
+        return 1;
+    }
+
+    // Loop to print the pattern
+    for (int i = 1; i <= n; ++i) {
+        for (int j = 1; j <= i; ++j) {
+            cout << i;
+        }
+        cout << endl;
+    }
+
+    return 0;
+}
+
+
