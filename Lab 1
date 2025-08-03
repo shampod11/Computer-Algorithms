@@ -1,4 +1,4 @@
-1) write a cpp To Display n number of natural numbers and their sum.
+#1) write a cpp To Display n number of natural numbers and their sum.
 
 solve:
 #include <iostream>
@@ -34,7 +34,8 @@ Enter the number of natural numbers to display: 5
 The first 5 natural numbers are: 1 2 3 4 5
 Sum of the first 5 natural numbers is: 15
 
-2. i) write a cpp To print the following pattern
+#2)
+i) write a cpp To print the following pattern
 till n number of user input:
 1
 22
@@ -68,5 +69,351 @@ int main() {
 
     return 0;
 }
+
+ii) To print the Floyd’s Triangle till n number of user input:
+1
+01
+101
+0101
+10101
+
+solve:
+#include <iostream>
+using namespace std;
+
+int main() {
+    int n;
+    cout << "Enter number of rows: ";
+    cin >> n;
+
+    for (int i = 1; i <= n; i++) {
+        // Decide starting bit for the row: odd rows start with 1, even rows start with 0
+        int bit = (i % 2 == 1) ? 1 : 0;
+
+        for (int j = 1; j <= i; j++) {
+            cout << bit;
+            // Flip bit for next column
+            bit = 1 - bit;
+        }
+        cout << "\n";
+    }
+
+    return 0;
+}
+
+iii) To print out the following pattern till n number of user input:
+*****
+*
+**
+***
+****
+*****
+
+solve:
+#include <iostream>
+using namespace std;
+
+int main() {
+    int n;
+    cout << "Enter number of rows: ";
+    cin >> n;
+
+    // Print the first line of n stars
+    for (int i = 0; i < n; i++) {
+        cout << "*";
+    }
+    cout << "\n";
+
+    // Print lines from 1 star up to n stars
+    for (int i = 1; i <= n; i++) {
+        for (int j = 0; j < i; j++) {
+            cout << "*";
+        }
+        cout << "\n";
+    }
+
+    return 0;
+}
+
+#3)
+i) To read a matrix of size m*n from the keyboard and display the same on the screen using the function.
+
+solve: 
+
+#include <iostream>
+using namespace std;
+
+// Function to display the matrix
+void displayMatrix(int matrix[][100], int m, int n) {
+    cout << "Matrix is:\n";
+    for (int i = 0; i < m; i++) {
+        for (int j = 0; j < n; j++) {
+            cout << matrix[i][j] << " ";
+        }
+        cout << "\n";
+    }
+}
+
+int main() {
+    int m, n;
+    cout << "Enter number of rows (m): ";
+    cin >> m;
+    cout << "Enter number of columns (n): ";
+    cin >> n;
+
+    int matrix[100][100];  // Assuming max size 100x100
+
+    cout << "Enter matrix elements row-wise:\n";
+    for (int i = 0; i < m; i++) {
+        for (int j = 0; j < n; j++) {
+            cin >> matrix[i][j];
+        }
+    }
+
+    // Call function to display the matrix
+    displayMatrix(matrix, m, n);
+
+    return 0;
+}
+
+output:
+
+Enter number of rows (m): 2
+Enter number of columns (n): 3
+Enter matrix elements row-wise:
+1 2 3
+4 5 6
+
+Matrix is:
+1 2 3 
+4 5 6 
+
+ii) Rewrite the previous problem to make the row parameter of the matrix as a default argument.
+
+solve:
+
+#include <iostream>
+using namespace std;
+
+// Default row size is 100
+void displayMatrix(int matrix[][100], int m = 100, int n = 0) {
+    cout << "Matrix is:\n";
+    for (int i = 0; i < m; i++) {
+        for (int j = 0; j < n; j++) {
+            cout << matrix[i][j] << " ";
+        }
+        cout << "\n";
+    }
+}
+
+int main() {
+    int m, n;
+    cout << "Enter number of rows (m): ";
+    cin >> m;
+    cout << "Enter number of columns (n): ";
+    cin >> n;
+
+    int matrix[100][100];
+
+    cout << "Enter matrix elements row-wise:\n";
+    for (int i = 0; i < m; i++) {
+        for (int j = 0; j < n; j++) {
+            cin >> matrix[i][j];
+        }
+    }
+
+    // Call displayMatrix with n only, row defaults to 100 (but we still need to pass m here for correct printing)
+    displayMatrix(matrix, m, n);
+
+    return 0;
+}
+
+output:
+
+Enter number of rows (m): 3
+Enter number of columns (n): 4
+Enter matrix elements row-wise:
+1 2 3 4
+5 6 7 8
+9 10 11 12
+
+Matrix is:
+1 2 3 4 
+5 6 7 8 
+9 10 11 12 
+
+#4)
+Given two matrices A (Dimension m*n) and B (Dimension n*p), perform matrix multiplication and return the resulting matrix.
+
+solve:
+#include <iostream>
+using namespace std;
+
+int main() {
+    int m, n, p;
+
+    cout << "Enter rows and columns for matrix A (m n): ";
+    cin >> m >> n;
+    cout << "Enter columns for matrix B (p): ";
+    cin >> p;
+
+    int A[50][50], B[50][50], C[50][50];
+
+    cout << "Enter matrix A elements:\n";
+    for (int i = 0; i < m; i++)
+        for (int j = 0; j < n; j++)
+            cin >> A[i][j];
+
+    cout << "Enter matrix B elements:\n";
+    for (int i = 0; i < n; i++)
+        for (int j = 0; j < p; j++)
+            cin >> B[i][j];
+
+    // Initialize result matrix C with zeros
+    for (int i = 0; i < m; i++)
+        for (int j = 0; j < p; j++)
+            C[i][j] = 0;
+
+    // Matrix multiplication
+    for (int i = 0; i < m; i++) {
+        for (int j = 0; j < p; j++) {
+            for (int k = 0; k < n; k++) {
+                C[i][j] += A[i][k] * B[k][j];
+            }
+        }
+    }
+
+    cout << "Resulting matrix C:\n";
+    for (int i = 0; i < m; i++) {
+        for (int j = 0; j < p; j++) {
+            cout << C[i][j] << " ";
+        }
+        cout << "\n";
+    }
+
+    return 0;
+}
+
+output:
+
+Enter rows and columns for matrix A (m n): 2 3
+Enter columns for matrix B (p): 2
+Enter matrix A elements:
+1 2 3
+4 5 6
+Enter matrix B elements:
+7 8
+9 10
+11 12
+
+Resulting matrix C:
+58 64 
+139 154 
+
+#5) 
+Given an array of integers nums and a target value target, return the indices of the two numbers that add up to the target.
+Example: nums = [2, 7, 11, 15], target = 9 Output: [0, 1] (because nums[0] + nums[1] == 9)
+solve:
+#include <iostream>
+using namespace std;
+
+int main() {
+    int nums[] = {2, 7, 11, 15};
+    int target = 9;
+    int size = sizeof(nums) / sizeof(nums[0]);
+
+    for (int i = 0; i < size; i++) {
+        for (int j = i + 1; j < size; j++) {
+            if (nums[i] + nums[j] == target) {
+                cout << "[" << i << ", " << j << "]\n";
+                return 0;  // Found the pair
+            }
+        }
+    }
+
+    cout << "No two sum solution found.\n";
+    return 0;
+}
+
+output:
+[0, 1]
+
+
+#6)
+i) Given an array, move all 0s to the end of the array without changing the order of the other elements.
+Example: nums = [0, 1, 0, 3, 12] Output: [1, 3, 12, 0, 0]
+
+solve:
+#include <iostream>
+using namespace std;
+
+int main() {
+    int nums[] = {0, 1, 0, 3, 12};
+    int size = sizeof(nums) / sizeof(nums[0]);
+
+    int pos = 0;  // position to place next non-zero
+
+    // Move all non-zero elements to the front
+    for (int i = 0; i < size; i++) {
+        if (nums[i] != 0) {
+            nums[pos] = nums[i];
+            pos++;
+        }
+    }
+
+    // Fill remaining positions with zero
+    for (int i = pos; i < size; i++) {
+        nums[i] = 0;
+    }
+
+    cout << "Array after moving zeros to end:\n";
+    for (int i = 0; i < size; i++) {
+        cout << nums[i] << " ";
+    }
+    cout << "\n";
+
+    return 0;
+}
+output:
+Array after moving zeros to end:
+1 3 12 0 0 
+
+ii) Given an array of n + 1 integers where each integer is between 1 and n (inclusive), find the duplicate number.
+Example: nums = [1, 3, 4, 2, 2] Output: 2
+
+solve:
+#include <iostream>
+using namespace std;
+
+int main() {
+    int nums[] = {1, 3, 4, 2, 2};
+    int size = sizeof(nums) / sizeof(nums[0]);
+    int duplicate = -1;
+
+    for (int i = 0; i < size; i++) {
+        for (int j = i + 1; j < size; j++) {
+            if (nums[i] == nums[j]) {
+                duplicate = nums[i];
+                break;
+            }
+        }
+        if (duplicate != -1) break;
+    }
+
+    if (duplicate != -1) {
+        cout << "Duplicate number is: " << duplicate << "\n";
+    } else {
+        cout << "No duplicate found.\n";
+    }
+
+    return 0;
+}
+
+output:
+Duplicate number is: 2
+
+
+
+
 
 
