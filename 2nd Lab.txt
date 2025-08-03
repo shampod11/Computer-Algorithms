@@ -1,0 +1,257 @@
+1. Find the Square Root of a Number: Given a non-negative integer n, find the largest integer x such that x2 ≤ n. You cannot use built-in square root functions.
+Example: Input: n=10 Output: 3
+
+solve:
+#include <iostream>
+using namespace std;
+
+int sqrtBinarySearch(int n) {
+    if (n == 0 || n == 1) 
+        return n;
+
+    int start = 1, end = n, ans = 0;
+
+    while (start <= end) {
+        int mid = start + (end - start) / 2;
+
+        // To avoid overflow, compare mid <= n / mid
+        if (mid <= n / mid) {
+            ans = mid;         // mid is a valid candidate
+            start = mid + 1;   // try for a bigger number
+        } else {
+            end = mid - 1;     // mid^2 > n, try smaller number
+        }
+    }
+
+    return ans;
+}
+
+int main() {
+    int n;
+    cout << "Enter a non-negative integer: ";
+    cin >> n;
+
+    int result = sqrtBinarySearch(n);
+    cout << "Largest integer x such that x^2 <= " << n << " is: " << result << "\n";
+
+    return 0;
+}
+
+output:
+10
+Largest integer x such that x^2 <= 10 is: 3
+
+
+2. Search in a Rotated Sorted Array: Given a sorted array that is rotated at some pivot and a target value x, determine the index of x. If x is not found, return -1.
+Example 1: Input: array = [3, 4, 5, 1, 2]; x = 2 Output: 4
+
+solve:
+#include <iostream>
+using namespace std;
+
+int searchRotatedArray(int arr[], int size, int x) {
+    int start = 0, end = size - 1;
+
+    while (start <= end) {
+        int mid = start + (end - start) / 2;
+
+        if (arr[mid] == x)
+            return mid;
+
+        // Left half is sorted
+        if (arr[start] <= arr[mid]) {
+            if (x >= arr[start] && x < arr[mid])
+                end = mid - 1;
+            else
+                start = mid + 1;
+        }
+        // Right half is sorted
+        else {
+            if (x > arr[mid] && x <= arr[end])
+                start = mid + 1;
+            else
+                end = mid - 1;
+        }
+    }
+
+    return -1; // not found
+}
+
+int main() {
+    int arr[] = {3, 4, 5, 1, 2};
+    int size = sizeof(arr) / sizeof(arr[0]);
+    int x = 2;
+
+    int index = searchRotatedArray(arr, size, x);
+    cout << "Index of " << x << ": " << index << "\n";
+
+    return 0;
+}
+
+output:
+Index of 2: 4
+
+
+3. Finding Minimum in a Rotated Sorted Array: Given a rotated sorted array where all elements are distinct, find the minimum element.
+Example 1: Input: array = [3, 4, 5, 1, 2] Output: 1
+
+solve:
+#include <iostream>
+using namespace std;
+
+int findMinInRotatedArray(int arr[], int size) {
+    int start = 0, end = size - 1;
+
+    // If array is not rotated (sorted), return first element
+    if (arr[start] <= arr[end])
+        return arr[start];
+
+    while (start < end) {
+        int mid = start + (end - start) / 2;
+
+        // If mid element is greater than end, min is in right half
+        if (arr[mid] > arr[end]) {
+            start = mid + 1;
+        } else {
+            // Otherwise, min is in left half including mid
+            end = mid;
+        }
+    }
+
+    // start == end points to the minimum element
+    return arr[start];
+}
+
+int main() {
+    int arr[] = {3, 4, 5, 1, 2};
+    int size = sizeof(arr) / sizeof(arr[0]);
+
+    int minimum = findMinInRotatedArray(arr, size);
+    cout << "Minimum element in the rotated array is: " << minimum << "\n";
+
+    return 0;
+}
+
+output:
+
+Minimum element in the rotated array is: 1
+
+4. Find the First Occurrence of a Target: Given an array of integers, find the index of the first occurrence of a target value x. If the target is not found, return -1.
+Example 1: Input: array = [5, 3, 7, 9, 3] ; x = 3 Output: 1
+
+solve:
+#include <iostream>
+using namespace std;
+
+int firstOccurrence(int arr[], int size, int x) {
+    for (int i = 0; i < size; i++) {
+        if (arr[i] == x)
+            return i;  // return index of first occurrence
+    }
+    return -1;  // not found
+}
+
+int main() {
+    int arr[] = {5, 3, 7, 9, 3};
+    int size = sizeof(arr) / sizeof(arr[0]);
+    int x = 3;
+
+    int index = firstOccurrence(arr, size, x);
+    cout << "First occurrence of " << x << " is at index: " << index << "\n";
+
+    return 0;
+}
+
+output:
+First occurrence of 3 is at index: 1
+
+
+5. Find the Maximum Element in an Array: Given an array of integers, find the maximum value. Example 1: Input: array = [1, 7, 3, 9, 5] Output: 9
+Example 2: Input: array = [-3, -1, -7, -2] Output: -1
+
+solve:
+#include <iostream>
+using namespace std;
+
+int findMaximum(int arr[], int size) {
+    int maxVal = arr[0];
+
+    for (int i = 1; i < size; i++) {
+        if (arr[i] > maxVal) {
+            maxVal = arr[i];
+        }
+    }
+
+    return maxVal;
+}
+
+int main() {
+    int n;
+    cout << "Enter the number of elements in the array: ";
+    cin >> n;
+
+    int arr[n];  // Create array of size n
+
+    cout << "Enter " << n << " elements:\n";
+    for (int i = 0; i < n; i++) {
+        cin >> arr[i];
+    }
+
+    int maxElement = findMaximum(arr, n);
+    cout << "Maximum element in the array is: " << maxElement << "\n";
+
+    return 0;
+}
+
+output:
+
+Enter the number of elements in the array: 5
+Enter 5 elements:
+1 7 3 9 5
+Maximum element in the array is: 9
+
+6. Count Occurrences of a Target: Given an array of integers, count the number of times a target value x appears in the array.
+Example 1: Input: array = [2, 4, 2, 8, 2] ; x = 2 Output: 3
+
+solve:
+#include <iostream>
+using namespace std;
+
+int countOccurrences(int arr[], int size, int x) {
+    int count = 0;
+    for (int i = 0; i < size; i++) {
+        if (arr[i] == x)
+            count++;
+    }
+    return count;
+}
+
+int main() {
+    int n, x;
+    cout << "Enter the number of elements in the array: ";
+    cin >> n;
+
+    int arr[n];
+    cout << "Enter " << n << " elements:\n";
+    for (int i = 0; i < n; i++) {
+        cin >> arr[i];
+    }
+
+    cout << "Enter the target value to count: ";
+    cin >> x;
+
+    int result = countOccurrences(arr, n, x);
+    cout << "The number " << x << " appears " << result << " times in the array.\n";
+
+    return 0;
+}
+
+output:
+
+Enter the number of elements in the array: 5
+Enter 5 elements:
+2 4 2 8 2
+Enter the target value to count: 2
+The number 2 appears 3 times in the array.
+
+
